@@ -8,16 +8,16 @@
   <meta name="keywords" content="supermarket simulator, supermarket simulator storage, supermarket simulator xbox, supermarket simulator tips and tricks" />
   <style>
     :root {
-      /* Dark tech aesthetic aligned with game visuals */
-      --bg: #0c1024;           /* deeper night blue */
-      --card: #11163a;         /* card surface */
-      --text: #f2f5fb;         /* primary text */
-      --muted: #b8bdd6;        /* secondary text */
-      --accent: #5ac8fa;       /* cyan accent */
-      --accent-2: #7bed9f;     /* lime accent */
-      --accent-3: #ffcf00;     /* price/highlight */
-      --border: #24284e;       /* subtle borders */
-      --shadow: rgba(0,0,0,0.35);
+      /* Warm light theme aligned with in-store visuals */
+      --bg: #f7f7f9;           /* light background */
+      --card: #ffffff;         /* card surface */
+      --text: #1f2430;         /* primary text */
+      --muted: #6b7280;        /* secondary text */
+      --accent: #ff7a1a;       /* orange accent */
+      --accent-2: #33c24d;     /* green accent */
+      --accent-3: #ffd34d;     /* price/highlight */
+      --border: #e5e7eb;       /* subtle borders */
+      --shadow: rgba(17,24,39,0.08);
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
@@ -26,26 +26,28 @@
     .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
     /* header removed */
 
-    .hero { background: radial-gradient(1200px 420px at 18% -10%, rgba(90,200,250,0.22), transparent 60%),
-                        radial-gradient(900px 320px at 92% 0%, rgba(123,237,159,0.18), transparent 65%);
+    .hero { background: radial-gradient(1200px 420px at 18% -10%, rgba(255,122,26,0.18), transparent 60%),
+                        radial-gradient(900px 320px at 92% 0%, rgba(51,194,77,0.16), transparent 65%);
              border-bottom: 1px solid var(--border); }
     .hero .inner { display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; padding: 56px 0; }
     .hero h1 { font-size: 36px; line-height: 1.15; margin: 0 0 12px; }
     .hero p { color: var(--muted); margin: 0 0 18px; }
-    .brand-hero { display: inline-flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 999px; background: rgba(25,32,74,0.6); border: 1px solid var(--border); color: var(--muted); font-size: 14px; margin-bottom: 12px; }
+    .brand-hero { display: inline-flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 999px; background: #fff7f0; border: 1px solid var(--border); color: var(--muted); font-size: 14px; margin-bottom: 12px; }
     .brand-hero svg { width: 22px; height: 22px; }
     .cta { display: flex; flex-wrap: wrap; gap: 12px; }
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); background: #141a44; color: var(--text); font-weight: 700; box-shadow: 0 6px 16px var(--shadow); }
-    .btn.primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #0f1226; border: none; }
-    .btn.secondary { background: #141a44; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); background: #ffffff; color: var(--text); font-weight: 700; box-shadow: 0 6px 16px var(--shadow); }
+    .btn.primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #ffffff; border: none; }
+    .btn.secondary { background: #ffffff; }
 
-    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: #19204a; color: var(--muted); font-size: 13px; margin: 10px 0 22px; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: #eefaf1; color: #256f3a; font-size: 13px; margin: 10px 0 22px; border: 1px solid var(--border); }
     .badge svg { width: 18px; height: 18px; }
 
     .panel { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 10px 24px var(--shadow); }
-    .section { padding: 36px 0; }
+    .panel.image { padding: 0; overflow: hidden; min-height: 220px; }
+    .panel.image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .section { padding: 56px 0; }
     .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .card { background: #0f1438; border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 8px 20px var(--shadow); }
+    .card { background: #ffffff; border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 8px 20px var(--shadow); }
     .card h3 { margin: 0 0 8px; font-size: 18px; }
     .card p { margin: 0; color: var(--muted); font-size: 14px; }
     .card .icon { width: 24px; height: 24px; margin-bottom: 10px; }
@@ -65,12 +67,7 @@
 
     /* breadcrumb removed */
 
-    /* ToC pills + active highlight */
-    #toc .list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding-left: 0; counter-reset: toc; }
-    #toc .list li { list-style: none; }
-    #toc .list a { display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: #19204a; border: 1px solid #232750; color: var(--text); font-size: 14px; }
-    #toc .list a::before { content: counter(toc); counter-increment: toc; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 999px; background: #1a1f44; color: var(--muted); font-size: 12px; }
-    #toc .list a.active { background: linear-gradient(90deg, rgba(90,200,250,0.15), rgba(123,237,159,0.15)); border-color: #2a2f5a; }
+    /* ToC removed */
 
     /* responsive */
     @media (max-width: 900px) {
@@ -78,6 +75,7 @@
       .grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 600px) {
+      .section { padding: 36px 0; }
       .grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 28px; }
     }
@@ -109,41 +107,15 @@
           <p class="note" style="margin-top:10px;">Note: Availability and subscription tiers may vary by region. Please refer to platform listings.</p>
         </div>
         <div>
-          <div class="panel" role="img" aria-label="Hero visual placeholder">
-            <svg viewBox="0 0 400 220" width="100%" height="100%" aria-hidden="true">
-              <defs>
-                <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-                  <stop offset="0%" stop-color="#5ac8fa" />
-                  <stop offset="100%" stop-color="#7bed9f" />
-                </linearGradient>
-              </defs>
-              <rect x="0" y="0" width="400" height="220" rx="14" fill="#11163f" stroke="#232750" />
-              <rect x="18" y="18" width="364" height="80" rx="10" fill="url(#g)" />
-              <text x="30" y="65" font-size="26" font-weight="700" fill="#0f1226">Supermarket Simulator</text>
-              <rect x="18" y="110" width="110" height="80" rx="8" fill="#15193a" stroke="#232750" />
-              <rect x="146" y="110" width="110" height="80" rx="8" fill="#15193a" stroke="#232750" />
-              <rect x="274" y="110" width="110" height="80" rx="8" fill="#15193a" stroke="#232750" />
-            </svg>
+          <div class="panel image" role="img" aria-label="Supermarket Simulator Co-Op Update artwork">
+            <img src="assets/hero-coop.jpg" alt="Supermarket Simulator Co-Op Update artwork" loading="lazy" />
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Insert breadcrumb navigation after header -->
-  <section id="toc" class="section" aria-labelledby="toc-title">
-    <div class="container">
-      <h2 id="toc-title">Table of Contents</h2>
-      <ul class="list" role="list">
-        <li role="listitem"><a href="#about">What is supermarket simulator</a></li>
-        <li role="listitem"><a href="#howto">How to Play supermarket simulator</a></li>
-        <li role="listitem"><a href="#features">Features of supermarket simulator</a></li>
-        <li role="listitem"><a href="#tips">Tips and Tricks for supermarket simulator</a></li>
-        <li role="listitem"><a href="#download">Where Can I Download and Play supermarket simulator</a></li>
-        <li role="listitem"><a href="#faq">FAQ</a></li>
-      </ul>
-    </div>
-  </section>
+  <!-- ToC section removed -->
 
   <main id="main" class="container" aria-label="Main content">
     <section id="about" class="section" aria-labelledby="about-title">
@@ -347,27 +319,4 @@
 })();
 </script>
 
-<!-- Scroll-spy to highlight ToC items and update breadcrumb current label -->
-<script>
-(function(){
-  const tocLinks = Array.from(document.querySelectorAll('#toc .list a'));
-  const byId = {};
-  tocLinks.forEach(a => byId[a.getAttribute('href').slice(1)] = a);
-  const sections = Object.keys(byId).map(id => document.getElementById(id)).filter(Boolean);
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      const id = entry.target.id;
-      const link = byId[id];
-      if(!link) return;
-      if(entry.isIntersecting) {
-        tocLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-        const current = document.querySelector('.breadcrumb .current');
-        if(current) current.textContent = entry.target.querySelector('h2')?.textContent || id;
-      }
-    });
-  }, { rootMargin: "-20% 0px -60% 0px", threshold: 0.1 });
-  sections.forEach(sec => observer.observe(sec));
-})();
-</script>
+<!-- Scroll-spy for ToC removed -->
