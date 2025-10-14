@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Supermarket Simulator · Info Site</title>
+  <meta name="description" content="Explore supermarket simulator on Xbox! Use our tips and tricks to choose mods, manage storage, process online orders and run your own supermarket today!" />
+  <meta name="keywords" content="supermarket simulator, supermarket simulator storage, supermarket simulator xbox, supermarket simulator tips and tricks" />
+  <style>
+    :root {
+      --bg: #0f1226;
+      --card: #15193a;
+      --text: #f4f6fb;
+      --muted: #c8cbe0;
+      --accent: #5ac8fa;
+      --accent-2: #7bed9f;
+      --danger: #ff6b6b;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    header { position: sticky; top: 0; background: rgba(15,18,38,0.75); backdrop-filter: saturate(180%) blur(10px); border-bottom: 1px solid #232750; z-index: 50; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    nav .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .3px; }
+    nav .brand svg { width: 28px; height: 28px; }
+    nav .links { display: flex; gap: 18px; }
+    nav .links a { color: var(--muted); font-size: 14px; }
+
+    .hero { background: radial-gradient(1200px 400px at 20% 0%, rgba(90,200,250,0.25), transparent 60%),
+                        radial-gradient(900px 300px at 90% 10%, rgba(123,237,159,0.2), transparent 65%);
+             border-bottom: 1px solid #24284e; }
+    .hero .inner { display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; padding: 64px 0; }
+    .hero h1 { font-size: 36px; line-height: 1.15; margin: 0 0 12px; }
+    .hero p { color: var(--muted); margin: 0 0 18px; }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 12px; border: 1px solid #2a2f5a; background: #1a1f44; color: var(--text); font-weight: 600; }
+    .btn.primary { background: linear-gradient(90deg, #5ac8fa, #7bed9f); color: #0f1226; border: none; }
+    .btn.secondary { background: #1a1f44; }
+
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: #19204a; color: var(--muted); font-size: 13px; margin: 10px 0 22px; }
+    .badge svg { width: 18px; height: 18px; }
+
+    .panel { background: var(--card); border: 1px solid #232750; border-radius: 16px; padding: 18px; }
+    .section { padding: 36px 0; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: #101334; border: 1px solid #232750; border-radius: 14px; padding: 16px; }
+    .card h3 { margin: 0 0 8px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .card .icon { width: 24px; height: 24px; margin-bottom: 10px; }
+
+    .note { font-size: 14px; color: var(--muted); }
+    .list { display: grid; gap: 8px; padding-left: 18px; }
+    .list li { color: var(--muted); }
+
+    footer { border-top: 1px solid #232750; padding: 26px 0; color: var(--muted); }
+
+    /* utility */
+    .hidden { display: none !important; }
+
+    /* smooth scroll and anchor offset */
+    html { scroll-behavior: smooth; }
+    .section { scroll-margin-top: 90px; }
+
+    /* breadcrumb */
+    .breadcrumb { background: rgba(15,18,38,0.6); border-bottom: 1px solid #232750; }
+    .breadcrumb .container { padding: 10px 20px; }
+    .breadcrumb ol { margin: 0; padding: 0; list-style: none; display: flex; gap: 8px; flex-wrap: wrap; color: var(--muted); font-size: 13px; }
+    .breadcrumb li::after { content: "›"; margin: 0 6px; color: #39407a; }
+    .breadcrumb li:last-child::after { content: ""; }
+    .breadcrumb a { color: var(--muted); }
+    .breadcrumb .current { color: var(--text); font-weight: 600; }
+
+    /* ToC pills + active highlight */
+    #toc .list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding-left: 0; counter-reset: toc; }
+    #toc .list li { list-style: none; }
+    #toc .list a { display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: #19204a; border: 1px solid #232750; color: var(--text); font-size: 14px; }
+    #toc .list a::before { content: counter(toc); counter-increment: toc; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 999px; background: #1a1f44; color: var(--muted); font-size: 12px; }
+    #toc .list a.active { background: linear-gradient(90deg, rgba(90,200,250,0.15), rgba(123,237,159,0.15)); border-color: #2a2f5a; }
+
+    /* responsive */
+    @media (max-width: 900px) {
+      .hero .inner { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main" style="position:absolute;left:-999px;top:-999px;">Skip to main content</a>
+  
+  
+
+  <section class="hero" id="hero" aria-label="Hero">
+    <div class="container">
+      <div class="inner">
+        <div>
+          <div class="badge" aria-label="Availability badge">
+            <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path fill="#7bed9f" d="M9 16.17l-3.88-3.88-1.41 1.41L9 19l11-11-1.41-1.41z"/></svg>
+            <span>Now on Game Pass (Cloud / Console / PC)</span>
+          </div>
+          <h1>supermarket simulator all level guide</h1>
+          <p>Play on Cloud, Console, and PC; includes Multiplayer and deeper management gameplay.</p>
+          <div class="cta" role="group" aria-label="Call to action">
+            <a class="btn primary" href="https://news.xbox.com/en-us/2025/10/08/xbox-game-pass-october-2025-wave-1/" target="_blank" rel="noopener noreferrer">View Xbox Official News</a>
+            <a class="btn secondary" href="https://xboxera.com/2025/10/08/supermarket-simulator-lands-in-xbox-game-pass/" target="_blank" rel="noopener noreferrer">Read Media Coverage</a>
+          </div>
+          <p class="note" style="margin-top:10px;">Note: Availability and subscription tiers may vary by region. Please refer to platform listings.</p>
+        </div>
+        <div>
+          <div class="panel" role="img" aria-label="Hero visual placeholder">
+            <svg viewBox="0 0 400 220" width="100%" height="100%" aria-hidden="true">
+              <defs>
+                <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#5ac8fa" />
+                  <stop offset="100%" stop-color="#7bed9f" />
+                </linearGradient>
+              </defs>
+              <rect x="0" y="0" width="400" height="220" rx="14" fill="#11163f" stroke="#232750" />
+              <rect x="18" y="18" width="364" height="80" rx="10" fill="url(#g)" />
+              <text x="30" y="65" font-size="26" font-weight="700" fill="#0f1226">Supermarket Simulator</text>
+              <rect x="18" y="110" width="110" height="80" rx="8" fill="#15193a" stroke="#232750" />
+              <rect x="146" y="110" width="110" height="80" rx="8" fill="#15193a" stroke="#232750" />
+              <rect x="274" y="110" width="110" height="80" rx="8" fill="#15193a" stroke="#232750" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Insert breadcrumb navigation after header -->
+  <section id="toc" class="section" aria-labelledby="toc-title">
+    <div class="container">
+      <h2 id="toc-title">Table of Contents</h2>
+      <ul class="list" role="list">
+        <li role="listitem"><a href="#about">What is supermarket simulator</a></li>
+        <li role="listitem"><a href="#howto">How to Play supermarket simulator</a></li>
+        <li role="listitem"><a href="#features">Features of supermarket simulator</a></li>
+        <li role="listitem"><a href="#tips">Tips and Tricks for supermarket simulator</a></li>
+        <li role="listitem"><a href="#download">Where Can I Download and Play supermarket simulator</a></li>
+        <li role="listitem"><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <main id="main" class="container" aria-label="Main content">
+    <section id="about" class="section" aria-labelledby="about-title">
+      <h2 id="about-title">What is supermarket simulator</h2>
+      <p>Supermarket Simulator is a management simulation about building and operating a modern grocery store. Design your layout, stock shelves, set prices, serve customers at checkout, manage suppliers and finances, and expand from a small corner shop to a thriving market.</p>
+      <p>Multiplayer lets you co-manage the store with friends, coordinating stocking, checkout, and ordering tasks to run efficiently.</p>
+
+
+    <!-- Add How to Play -->
+    <section id="howto" class="section" aria-labelledby="howto-title">
+      <h2 id="howto-title">How to Play supermarket simulator</h2>
+      <ol class="list">
+        <li>Open and tidy the store; ensure aisles and checkout are clear.</li>
+        <li>Order and receive stock; verify quantities and product freshness.</li>
+        <li>Set competitive prices and place items on shelves by category.</li>
+        <li>Serve customers efficiently; balance checkout speed and accuracy.</li>
+        <li>Track cash flow, expenses, and margins; avoid stockouts and overstock.</li>
+        <li>Reinvest profits to expand aisles, add new equipment, and unlock products.</li>
+        <li>(Optional) Enable Multiplayer and assign roles for stocking, cashier, and ordering.</li>
+      </ol>
+    </section>
+
+    <section id="features" class="section" aria-labelledby="features-title">
+      <h2 id="features-title">Features of supermarket simulator</h2>
+      <div class="grid" role="list">
+        <article class="card" role="listitem">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#5ac8fa" d="M3 3h18v4H3zM3 9h18v12H3z"/></svg>
+          <h3>Customizable Store Layout</h3>
+          <p>Place shelves and counters freely; expand floor space to boost sales and efficiency.</p>
+        </article>
+        <article class="card" role="listitem">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#7bed9f" d="M5 21h14V7H5v14zm2-10h10v8H7v-8zM7 3h10v2H7z"/></svg>
+          <h3>Checkout & Cash Management</h3>
+          <p>Control change and payments to improve customer satisfaction and optimize cash flow.</p>
+        </article>
+        <article class="card" role="listitem">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ffcf00" d="M12 2l4 8h8l-6.5 5 2.5 7-6.5-4.5L7 22l2.5-7L3 10h8z"/></svg>
+          <h3>Inventory & Online Orders</h3>
+          <p>Manage restocking and merchandising; fulfill online orders and source from local markets.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="multiplayer" class="section hidden" aria-labelledby="multiplayer-title">
+      <h2 id="multiplayer-title">Multiplayer Update</h2>
+      <div class="panel">
+        <p class="note">Play with friends on PC and Xbox Series S|X. Cross-platform is supported between Xbox Game Pass and PC Game Pass; currently Steam and PC Game Pass are not interoperable.</p>
+      </div>
+    </section>
+
+    <section id="platforms" class="section hidden" aria-labelledby="platforms-title">
+      <h2 id="platforms-title">Platforms & Subscription</h2>
+      <div class="grid" role="list">
+        <div class="card" role="listitem">
+          <h3>Game Pass Ultimate</h3>
+          <p class="note">Cloud, Console, and PC coverage; ideal for cross-platform play.</p>
+        </div>
+        <div class="card" role="listitem">
+          <h3>Game Pass Premium</h3>
+          <p class="note">Includes Console and selected benefits; details vary by region and platform.</p>
+        </div>
+        <div class="card" role="listitem">
+          <h3>PC Game Pass</h3>
+          <p class="note">For Windows PC; supports Multiplayer and cross-platform (with Xbox Game Pass).</p>
+        </div>
+      </div>
+      <p class="note" style="margin-top:10px;">Availability is subject to official announcements and platform pages; installation/update may roll out gradually in the store.</p>
+    </section>
+
+    <section id="updates" class="section hidden" aria-labelledby="updates-title">
+      <h2 id="updates-title">Latest Updates</h2>
+      <ul class="list" id="updates-list" aria-live="polite">
+        <li>Multiplayer update improves co-op management and roles.</li>
+        <li>Now available on Xbox Game Pass (Cloud / Console / PC).</li>
+      </ul>
+      <p class="note">This section can load external updates.json when provided.</p>
+    </section>
+
+    <section id="tips" class="section" aria-labelledby="tips-title">
+      <h2 id="tips-title">Tips and Tricks for supermarket simulator</h2>
+      <ul class="list">
+        <li>Prioritize high-margin essentials; balance loss leaders.</li>
+        <li>Arrange shelves by category to reduce customer search time.</li>
+        <li>Adjust pricing dynamically based on stock levels and demand.</li>
+        <li>Restock during off-peak hours; keep checkout lanes clear.</li>
+        <li>In co-op, assign roles (stocking, cashier, ordering) for efficiency.</li>
+      </ul>
+    </section>
+
+    <section id="download" class="section" aria-labelledby="download-title">
+      <h2 id="download-title">Where Can I Download and Play supermarket simulator</h2>
+      <ul class="list">
+        <li><strong>Xbox Game Pass:</strong> Cloud/Console/PC. Check the Xbox App or Microsoft Store listing.</li>
+        <li><strong>PC Game Pass:</strong> Windows PC via Xbox App.</li>
+        <li><strong>Microsoft Store:</strong> Direct purchase; availability may roll out gradually.</li>
+        <li><strong>Steam:</strong> Separate ecosystem; not cross-play with PC Game Pass at this time.</li>
+      </ul>
+    </section>
+    <section id="faq" class="section" aria-labelledby="faq-title">
+      <h2 id="faq-title">FAQ</h2>
+      <ul class="list">
+        <li><strong>Is this a limited-time addition?</strong> Follow official Game Pass announcements and library changes.</li>
+        <li><strong>Does Multiplayer require extra setup?</strong> Keep the game updated and enable network permissions in the Xbox App.</li>
+        <li><strong>Why can’t I install for now?</strong> The store may be rolling out availability gradually. Try again later or check official channels.</li>
+        <li><strong>How do I confirm regional availability?</strong> Search the game in Microsoft Store/Xbox App and check whether it shows “Included with Game Pass”.</li>
+      </ul>
+    </section>
+
+
+  <!-- FAQPage structured data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this a limited-time addition?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Follow official Game Pass announcements and library changes." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Multiplayer require extra setup?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Keep the game updated and enable network permissions in the Xbox App." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why can’t I install for now?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The store may be rolling out availability gradually. Try again later or check official channels." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I confirm regional availability?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Search the game in Microsoft Store/Xbox App and check whether it shows \"Included with Game Pass\"." }
+      }
+    ]
+  }
+  </script>
+
+  <footer role="contentinfo">
+    <div class="container">
+      <p>This page is an unofficial information aggregation and guide; some details may change with official updates. Please refer to platform listings.</p>
+      <p>References:
+        <a href="https://news.xbox.com/en-us/2025/10/08/xbox-game-pass-october-2025-wave-1/" target="_blank" rel="noopener">Xbox official announcement</a> ·
+        <a href="https://xboxera.com/2025/10/08/supermarket-simulator-lands-in-xbox-game-pass/" target="_blank" rel="noopener">Media coverage</a>
+      </p>
+    </div>
+  </footer>
+  <!-- In page bottom </body> before simple search filter script (fix position) -->
+  <script>
+    (function(){
+      const q = document.getElementById('q');
+      if(!q) return;
+      const containers = [
+        document.querySelector('#toc .list'),
+        document.querySelector('#about'),
+        document.querySelector('#howto .list'),
+        document.querySelector('#features .grid'),
+        document.querySelector('#multiplayer .panel'),
+        document.querySelector('#platforms .grid'),
+        document.querySelector('#updates-list'),
+        document.querySelector('#tips .list'),
+        document.querySelector('#download .list'),
+        document.querySelector('#faq .list')
+      ].filter(Boolean);
+
+      function normalize(s){ return (s||'').toLowerCase().trim(); }
+      function filter(){
+        const term = normalize(q.value);
+        containers.forEach(c => {
+          [...c.children].forEach(item => {
+            const text = normalize(item.textContent);
+            if(!term) { item.classList.remove('hidden'); return; }
+            if(text.includes(term)) item.classList.remove('hidden');
+            else item.classList.add('hidden');
+          });
+        });
+      }
+      q.addEventListener('input', filter);
+    })();
+  </script>
+</body>
+</html>
+
+
+<!-- Load external updates.json if present -->
+<script>
+(function(){
+  const list = document.getElementById('updates-list');
+  if(!list) return;
+  fetch('updates.json').then(r => r.ok ? r.json() : Promise.reject('no updates.json'))
+    .then(items => {
+      list.innerHTML = '';
+      (items||[]).forEach(it => {
+        const li = document.createElement('li');
+        li.textContent = it.title || it;
+        list.appendChild(li);
+      });
+    })
+    .catch(()=>{});
+})();
+</script>
+
+<!-- Scroll-spy to highlight ToC items and update breadcrumb current label -->
+<script>
+(function(){
+  const tocLinks = Array.from(document.querySelectorAll('#toc .list a'));
+  const byId = {};
+  tocLinks.forEach(a => byId[a.getAttribute('href').slice(1)] = a);
+  const sections = Object.keys(byId).map(id => document.getElementById(id)).filter(Boolean);
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      const link = byId[id];
+      if(!link) return;
+      if(entry.isIntersecting) {
+        tocLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        const current = document.querySelector('.breadcrumb .current');
+        if(current) current.textContent = entry.target.querySelector('h2')?.textContent || id;
+      }
+    });
+  }, { rootMargin: "-20% 0px -60% 0px", threshold: 0.1 });
+  sections.forEach(sec => observer.observe(sec));
+})();
+</script>
